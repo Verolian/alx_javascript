@@ -1,5 +1,6 @@
-// 5-square.js
+#!/usr/bin/node
 
+// 5-square.js
 class Square {
     constructor(size) {
       if (size <= 0 || !Number.isInteger(size)) {
