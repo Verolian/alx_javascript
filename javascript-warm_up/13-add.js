@@ -1,6 +1,5 @@
-/ 13-main.js
+// main.js
 
-#!/usr/bin/node
-const add = require('./13-add').add;
+const addFunction = require('./add');
 
-console.log(add(3, 5));
+console.log(addFunction(3, 5)); // Output: 8
