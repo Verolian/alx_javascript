@@ -29,3 +29,4 @@ class Square {
       super(size);
     }
   }
+  module.exports = Square;
