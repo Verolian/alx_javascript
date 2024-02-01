@@ -17,4 +17,5 @@ class Rectangle {
       super(size, size);
     }
   }
+  module.exports = Square;
   
