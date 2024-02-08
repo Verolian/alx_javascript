@@ -1,31 +1,36 @@
 const request = require('request');
 
-const movieId = process.argv[2]; // Retrieve the movie ID from the command line arguments
+function getStarWarsMovieTitle(episodeNumber) {
+  // Ensure numeric episode number
+  if (isNaN(episodeNumber)) {
+    console.error('Please provide a valid episode number (integer).');
+    return;
+  }
 
-if (!movieId || isNaN(movieId)) {
-  console.error('Usage: node star_wars_movie_title.js <movie_id>');
-  process.exit(1);
+  const url = `https://swapi-api.alx-tools.com/api/films/${episodeNumber}`;
+
+  request(url, (error, response, body) => {
+    if (error) {
+      console.error('Error:', error);
+      return;
+    }
+
+    if (response.statusCode === 200) {
+      const movieData = JSON.parse(body);
+      if (movieData) {
+        console.log('Movie title:', movieData.title);
+      } else {
+        console.error('Movie not found.');
+      }
+    } else {
+      console.error('Error:', response.statusCode);
+    }
+  });
 }
 
-const apiUrl = `https://swapi-api.alx-tools.com/api/films/${movieId}`;
-
-// Make a GET request to the Star Wars API
-request(apiUrl, (error, response, body) => {
-  if (error) {
-    console.error('Error:', error.message);
-    process.exit(1);
-  }
-
-  if (response.statusCode !== 200) {
-    console.error(`Failed to fetch data. Status code: ${response.statusCode}`);
-    process.exit(1);
-  }
-
-  try {
-    const movieData = JSON.parse(body);
-    console.log(`Title: ${movieData.title}`);
-  } catch (parseError) {
-    console.error('Error parsing JSON:', parseError.message);
-    process.exit(1);
-  }
-});
+const episodeNumber = parseInt(process.argv[2]); // Get episode number from argument
+if (episodeNumber) {
+  getStarWarsMovieTitle(episodeNumber);
+} else {
+  console.error('Usage: node script.js <episode number>');
+}
