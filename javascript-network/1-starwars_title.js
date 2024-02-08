@@ -10,3 +10,4 @@ request(`${endpointUrl}/${movieEp}`,function(error,response,body){
     }
     const result = JSON.parse(body)
     console.log(result['title'])
+})
